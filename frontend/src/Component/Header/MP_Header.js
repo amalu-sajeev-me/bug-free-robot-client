@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 // import logo from '../Images/logo.png';
-import './LP_Header.css';
+import './MP_Header.css';
 
 function MP_Header() {
     return (
@@ -14,10 +14,10 @@ function MP_Header() {
                     </div>
                     <nav>
                         <div className='list'>
-                            <NavLink to="/" exact className="listItem" activeClassName='activeItem'>Home</NavLink>
-                            <NavLink to="/about" className="listItem" activeClassName='activeItem'>About</NavLink>
-                            <NavLink to="/feature" className="listItem" activeClassName='activeItem'>Feature</NavLink>
-                            <NavLink to="/contact" className="listItem" activeClassName='activeItem'>Contact Us</NavLink>
+                            <NavLink to="/dashboard" exact className="listItem" activeClassName='activeItem'>Dashboard</NavLink>
+                            <NavLink to="/notification" className="listItem" activeClassName='activeItem'>Notifications</NavLink>
+                            <NavLink to="/messages" className="listItem" activeClassName='activeItem'>Messages</NavLink>
+                            <NavLink to="/help" className="listItem" activeClassName='activeItem'>Help</NavLink>
                           
                         </div>
                     </nav>
