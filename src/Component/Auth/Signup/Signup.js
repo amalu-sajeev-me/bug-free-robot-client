@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import "../Login.css";
 import LP_Header from "../../Header/LP_Header";
 import { Form as form, Label, Input, SubmitButton } from "../Common";
-import Dashboard from "../../Dasboard/Dashboard";
+import axios from "axios";
 
 function Signup() {
   const history = useHistory();
@@ -31,25 +31,30 @@ function Signup() {
       const email = form.elements.namedItem('email').value;
       const username = form.elements.namedItem('username').value;
       const password = form.elements.namedItem('password').value;
-      const data = new URLSearchParams(`firstName=${firstName}&lastName=${lastName}&dateOfBirth=${dateOfBirth}&phone=${phone}&email=${email}&username=${username}&password=${password}`);
       console.log(firstName, lastName, dateOfBirth, phone, email, username, password);
       const loginRequest = new URL("https://bug-free.herokuapp.com/api/members/checkin");
-      await fetch(loginRequest, {
-        method: "post",
-        body: data
-      }).then(response => response.json())
-        .then(result => {
+      axios.post(loginRequest, {
+          firstName: `${firstName}`,
+          lastName: `${lastName}`,
+          dateOfBirth:`${dateOfBirth}`,
+          phone:`${phone}`,
+          email:`${email}`,
+          username:`${username}`,
+          password:`${password}`
+      },{
+        withCredentials: true
+      }).then(res => {
           console.log("loggedin status", loggedinStatus);
-          console.log("response result:", result.status);
-          if (result.status === true) {
+          console.log("response result:", res.data.status);
+          if (res.data.status === true) {
             console.log("logging in .. . ");
             setLoggedinStatus(true)
           };
-        });
-        console.log(loggedinStatus);
+      })
     })();
   }
   if(loggedinStatus === true){
+    console.log(loggedinStatus);
     alert('Registration Successfull')
     history.push('/dashboard');
   }

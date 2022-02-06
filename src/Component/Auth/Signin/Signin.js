@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 import "../Login.css";
 import LP_Header from "../../Header/LP_Header";
 import { SubmitButton, Input, Form as form, Label } from "../Common";
@@ -20,26 +21,27 @@ function Signin() {
   
   function handleBtnClick(e) {
     e.preventDefault();
-    (async function () {
+    (function () {
       const form = document.forms[0];
       const username = form.elements.namedItem('username').value;
       const password = form.elements.namedItem('password').value;
-      const data = new URLSearchParams(`username=${username}&password=${password}`);
       console.log(username, password);
       const loginRequest = new URL("https://bug-free.herokuapp.com/api/members/login");
-      await fetch(loginRequest, {
-        method: "post",
-        body: data
-      }).then(response => response.json())
-        .then(result => {
+      axios.post(loginRequest,{
+        username: `${username}`,
+        password: `${password}`
+      },{
+        withCredentials: true
+      })
+      .then(res => {
           console.log("loggedin status", loggedinStatus);
-          console.log("response result:", result.status);
-          if (result.status === true) {
+          console.log("response result:", res.data);
+          if (res.data.status === true) {
             console.log("logging in .. . ");
             setLoggedinStatus(true)
             console.log('status:',loggedinStatus);
-          };
-        });
+          }
+      });
     })();
   }
   if(loggedinStatus === true){
@@ -60,11 +62,11 @@ function Signin() {
               <form name="login" className="login">
                   <Label className="label">Username</Label>
                   <br />
-                  <Input className="input" type="text" name="username" defaultValue=""/>
+                  <Input className="input" type="text" name="username" defaultValue="jane_doe"/>
                   <br />
                   <Label className="label">Password</Label>
                   <br />
-                  <Input className="input" type="password" name="password" defaultValue=""/>
+                  <Input className="input" type="password" name="password" defaultValue="passmeinnow"/>
                   <br/>
                   <SubmitButton onClick={handleBtnClick}>Continue</SubmitButton>
                   <SubmitButton onClick={handleBtnCancel}>Cancel</SubmitButton>
