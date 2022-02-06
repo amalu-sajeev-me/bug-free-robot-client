@@ -7,9 +7,10 @@ function ListMember() {
             const headersList = {
                 'Accept': '*/*',
                 'User-Agent': 'Thunder Client (https://www.thunderclient.com)',
-                'content-type': 'application/json; charset=utf-8'
+                'content-type': 'application/x-www-form-urlencoded'
             }
             // application/x-www-form-urlencoded
+            // application/json; charset=utf-8
             const loginRequest = new URL("https://bug-free.herokuapp.com/api/members/all");
             await fetch(loginRequest, {
               method: "GET",
