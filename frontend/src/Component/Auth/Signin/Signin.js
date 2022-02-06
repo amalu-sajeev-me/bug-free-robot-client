@@ -3,8 +3,6 @@ import { useHistory } from "react-router-dom";
 import "../Login.css";
 import LP_Header from "../../Header/LP_Header";
 import { SubmitButton, Input, Form as form, Label } from "../Common";
-import Dashboard from "../../Dasboard/Dashboard";
-
 function Signin() {
   const history = useHistory();
 
@@ -16,10 +14,12 @@ function Signin() {
     history.push('/signup');
   }
   const [loggedinStatus, setLoggedinStatus] = useState(false);
+  useEffect(() => {
+    console.log('status:',loggedinStatus);
+  })
   
   function handleBtnClick(e) {
     e.preventDefault();
-
     (async function () {
       const form = document.forms[0];
       const username = form.elements.namedItem('username').value;
@@ -37,13 +37,15 @@ function Signin() {
           if (result.status === true) {
             console.log("logging in .. . ");
             setLoggedinStatus(true)
+            console.log('status:',loggedinStatus);
           };
         });
     })();
   }
   if(loggedinStatus === true){
-    alert('Login Successfull')
-    history.push('/dashboard');
+    console.log('status:',loggedinStatus);
+    alert('Login Successfull');
+      history.push('/dashboard')
   }
 
   return (

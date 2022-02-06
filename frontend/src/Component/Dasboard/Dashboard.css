@@ -4,4 +4,9 @@
 }
 .D-mainContainer{
     height: 93vh;
+    display: flex;
+    flex-direction: row;
+}
+.left-container{
+    
 }

@@ -9,8 +9,26 @@ import Sidebar from '../Sidebar/Sidebar';
 
 function Profile() {
     const history = useHistory();
-    const [users, setUsers] = useState([])
-    
+    const [user, setUser] = useState([])
+    useEffect(() => {
+        (async function () {
+            const headersList = {
+                'Accept': '*/*',
+                'User-Agent': 'Thunder Client (https://www.thunderclient.com)',
+                'content-type': 'application/x-www-form-urlencoded'
+            }
+            const loginRequest = new URL("https://bug-free.herokuapp.com/api/members/profile/{userID}");
+            await fetch(loginRequest, {
+              method: "GET",
+              headers: headersList
+            }).then(response => {
+                return response.json();
+            }).then(data => {
+                  console.log(data);
+                  setUser(data)
+              });
+          })();
+    }, [])
   return (
   <>
     <Main_Header />
