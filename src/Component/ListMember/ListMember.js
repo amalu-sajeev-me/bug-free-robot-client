@@ -12,7 +12,10 @@ function ListMember() {
             // application/x-www-form-urlencoded
             // application/json; charset=utf-8
             const loginRequest = new URL("https://bug-free.herokuapp.com/api/members/all");
-            await fetch(loginRequest).then(response => {
+            await fetch(loginRequest, {
+                mrthod: "get",
+                credentials: "include
+                ).then(response => {
                 return response.json();
             }).then(data => {
                   console.log(data);
