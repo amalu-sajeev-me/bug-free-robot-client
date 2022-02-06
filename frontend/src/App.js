@@ -4,6 +4,7 @@ import Home from './Component/Home/Home';
 import Signup from './Component/Auth/Signup/Signup';
 import Signin from './Component/Auth/Signin/Signin';
 import Dashboard from './Component/Dasboard/Dashboard';
+import Profile from './Component/Profile/Profile';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path='/signup' component={Signup} />
         <Route path='/signin' component={Signin} />
         <Route path='/dashboard' component={Dashboard} />
+        <Route path='/profile' component={Profile} />
       </Switch>
       </>
     </div>

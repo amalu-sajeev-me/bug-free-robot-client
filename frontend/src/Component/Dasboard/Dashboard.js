@@ -1,11 +1,20 @@
 import React from 'react';
 import MP_Header from '../Header/MP_Header';
+import Sidebar from '../Sidebar/Sidebar';
+import './Dashboard.css'
 
 function Dashboard() {
   return (
     <div>
         <MP_Header />
-        dashboard
+        <div className='D-mainContainer'>
+          <div className='left-container'>
+            <div className='search-container'>
+
+            </div>
+          </div>
+            <Sidebar />
+        </div>
     </div>
   );
 }
