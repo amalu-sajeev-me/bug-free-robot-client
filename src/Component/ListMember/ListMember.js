@@ -13,9 +13,9 @@ function ListMember() {
             // application/json; charset=utf-8
             const loginRequest = new URL("https://bug-free.herokuapp.com/api/members/all");
             await fetch(loginRequest, {
-                mrthod: "get",
-                credentials: "include
-                ).then(response => {
+                method: "get",
+                credentials: "include"
+            }).then(response => {
                 return response.json();
             }).then(data => {
                   console.log(data);
