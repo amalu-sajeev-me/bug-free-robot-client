@@ -101,7 +101,9 @@ function Signup() {
                   <SubmitButton onClick={handleBtnClick}>Continue</SubmitButton>
                   <SubmitButton onClick={handleCancel}>Cancel</SubmitButton>
                   <br />
-                  <p>Already have an account? <a href="" onClick={cancelBtnClick}>Signin</a></p>
+                  <div className="toggle">
+                  <p>Already have an account? <a href="" className="link" onClick={cancelBtnClick}>Signin</a></p>
+                  </div>
               </form>
           </div>
         </div>

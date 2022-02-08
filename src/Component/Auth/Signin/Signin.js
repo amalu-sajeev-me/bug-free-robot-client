@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 import "../Login.css";
 import LP_Header from "../../Header/LP_Header";
 import { SubmitButton, Input, Form as form, Label } from "../Common";
@@ -21,6 +21,28 @@ function Signin() {
   
   function handleBtnClick(e) {
     e.preventDefault();
+    // (async function () {
+    //   const form = document.forms[0];
+    //   const username = form.elements.namedItem('username').value;
+    //   const password = form.elements.namedItem('password').value;
+    //   const data = new URLSearchParams(`username=${username}&password=${password}`);
+    //   console.log(username, password);
+    //   const loginRequest = new URL("https://bug-free.herokuapp.com/api/members/login");
+    //   await fetch(loginRequest, {
+    //     method: "post",
+    //     body: data,
+    //     credentials: "include"
+    //   }).then(response => response.json())
+    //     .then(result => {
+    //       console.log("loggedin status", loggedinStatus);
+    //       console.log("response result:", result.status);
+    //       if (result.status === true) {
+    //         console.log("logging in .. . ");
+    //         setLoggedinStatus(true)
+    //         console.log('status:',loggedinStatus);
+    //       };
+    //     });
+    // })();
     (function () {
       const form = document.forms[0];
       const username = form.elements.namedItem('username').value;
@@ -71,7 +93,9 @@ function Signin() {
                   <SubmitButton onClick={handleBtnClick}>Continue</SubmitButton>
                   <SubmitButton onClick={handleBtnCancel}>Cancel</SubmitButton>
                   <br/>
-                  <p>Don't have an account? <a href="" onClick={handlebtnChange}>Signup</a></p>
+                  <div className="toggle">
+                  <p>Don't have an account? <a href="" className="link" onClick={handlebtnChange}>Signup</a></p>
+                  </div>
               </form>
           </div>
         </div>   

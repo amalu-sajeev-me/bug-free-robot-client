@@ -2,7 +2,7 @@ import React from 'react';
 import MP_Header from '../Header/MP_Header';
 import Sidebar from '../Sidebar/Sidebar';
 import './Dashboard.css'
-import ListMember from '../ListMember/ListMember';
+import ListMember from './ListMember';
 
 function Dashboard() {
   return (
