@@ -69,23 +69,23 @@ function SignInBasic() {
           backgroundRepeat: "no-repeat",
         }}
       />
-      <MKBox px={1} width="100%" height="100vh" mx="auto" position="relative" zIndex={2}>
+      <MKBox px={1} width="100%" height="93vh" mx="auto" position="relative" zIndex={2}>
         <Grid container spacing={1} justifyContent="center" alignItems="center" height="100%">
-          <Grid item xs={11} sm={9} md={5} lg={4} xl={3}>
+          <Grid item xs={11} sm={7} md={2.5} lg={2} xl={3}>
             <Card>
               <MKBox
                 variant="gradient"
                 bgColor="info"
                 borderRadius="lg"
                 coloredShadow="info"
-                mx={2}
+                mx={5}
                 mt={-3}
-                p={2}
-                mb={1}
+                p={1}
+                mb={.0}
                 textAlign="center"
               >
                 <MKTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-                  Sign in
+                  Sign Up
                 </MKTypography>
                 <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
                   <Grid item xs={2}>
@@ -105,43 +105,46 @@ function SignInBasic() {
                   </Grid>
                 </Grid>
               </MKBox>
-              <MKBox pt={4} pb={3} px={3}>
+              <MKBox pt={2} pb={3} px={7}>
                 <MKBox component="form" role="form">
-                  <MKBox mb={2}>
+                  <MKBox mb={1}>
+                    <MKInput type="text" label="FirstName" fullWidth />
+                  </MKBox>
+                  <MKBox mb={1}>
+                    <MKInput type="text" label="LastName" fullWidth />
+                  </MKBox>
+                  <MKBox mb={1}>
                     <MKInput type="email" label="Email" fullWidth />
                   </MKBox>
-                  <MKBox mb={2}>
+                  <MKBox mb={1}>
+                    <MKInput type="text" label="Username" fullWidth />
+                  </MKBox>
+                  <MKBox mb={1}>
+                    <MKInput type="date" label="" fullWidth />
+                  </MKBox>
+                  <MKBox mb={1}>
                     <MKInput type="password" label="Password" fullWidth />
                   </MKBox>
-                  <MKBox display="flex" alignItems="center" ml={-1}>
-                    <Switch checked={rememberMe} onChange={handleSetRememberMe} />
-                    <MKTypography
-                      variant="button"
-                      fontWeight="regular"
-                      color="text"
-                      onClick={handleSetRememberMe}
-                      sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
-                    >
-                      &nbsp;&nbsp;Remember me
-                    </MKTypography>
+                  <MKBox mb={1}>
+                    <MKInput type="password" label="Confirm Password" fullWidth />
                   </MKBox>
-                  <MKBox mt={4} mb={1}>
+                  <MKBox mt={1} mb={.2}>
                     <MKButton variant="gradient" color="info" fullWidth>
                       sign in
                     </MKButton>
                   </MKBox>
-                  <MKBox mt={3} mb={1} textAlign="center">
+                  <MKBox mt={1} mb={.2} textAlign="center">
                     <MKTypography variant="button" color="text">
-                      Don&apos;t have an account?{" "}
+                      Already have an account?{" "}
                       <MKTypography
                         component={Link}
-                        to="/sign-up"
+                        to="/sign-in"
                         variant="button"
                         color="info"
                         fontWeight="medium"
                         textGradient
                       >
-                        Sign up
+                        Sign in
                       </MKTypography>
                     </MKTypography>
                   </MKBox>

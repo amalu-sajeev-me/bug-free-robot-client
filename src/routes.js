@@ -47,6 +47,7 @@ import AboutUs from "layouts/pages/landing-pages/about-us";
 import ContactUs from "layouts/pages/landing-pages/contact-us";
 import Author from "layouts/pages/landing-pages/author";
 import SignIn from "layouts/pages/authentication/sign-in";
+import SignUp from "layouts/pages/authentication/sign-up"
 
 // Sections
 import PageHeaders from "layouts/sections/page-sections/page-headers";
@@ -100,8 +101,13 @@ const routes = [
         collapse: [
           {
             name: "sign in",
-            route: "/pages/authentication/sign-in",
+            route: "/sign-in",
             component: <SignIn />,
+          },
+          {
+            name: "sign up",
+            route: "/sign-up",
+            component: <SignUp />,
           },
         ],
       },
