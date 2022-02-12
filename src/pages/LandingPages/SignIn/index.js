@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import Switch from "@mui/material/Switch";
 import Grid from "@mui/material/Grid";
@@ -13,6 +13,7 @@ import { Stack } from "@mui/material";
 import axios from "axios";
 
 function SignInBasic() {
+  const navigate = useNavigate();
 
   const [rememberMe, setRememberMe] = useState(false);
 
@@ -50,7 +51,7 @@ function SignInBasic() {
 }
 if(loggedinStatus === true){
   console.log('loginstatus:',loggedinStatus);
-  <Navigate to="/" />
+  navigate('/dashboard')
 }
 
   return (

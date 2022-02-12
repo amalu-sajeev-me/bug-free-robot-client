@@ -52,7 +52,7 @@ function SignInBasic() {
   }
   if(loggedinStatus === true){
     console.log(loggedinStatus);
-    navigate('/')
+    navigate('/dashboard')
   }
 
   return (
