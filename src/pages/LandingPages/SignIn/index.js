@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState,useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import Switch from "@mui/material/Switch";
@@ -12,17 +12,16 @@ import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 import { Stack } from "@mui/material";
 import axios from "axios";
 
-function SignInBasic() {
-  const navigate = useNavigate();
-
-  const [rememberMe, setRememberMe] = useState(false);
-
-  const handleSetRememberMe = () => setRememberMe(!rememberMe);
+function SignInBasic(){
 
   const [loggedinStatus, setLoggedinStatus] = useState(false);
   useEffect(() => {
     console.log('status:',loggedinStatus);
   })
+
+  const [rememberMe, setRememberMe] = useState(false);
+
+  const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
   function handleBtnClick(e) {
     e.preventDefault();
@@ -51,7 +50,7 @@ function SignInBasic() {
 }
 if(loggedinStatus === true){
   console.log('loginstatus:',loggedinStatus);
-  navigate('/dashboard')
+  alert("success")
 }
 
   return (

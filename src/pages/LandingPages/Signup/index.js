@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import MKBox from "components/MKBox";
@@ -12,7 +12,6 @@ import { useState } from "react";
 import axios from "axios";
 
 function SignInBasic() {
-  const navigate = useNavigate();
 
   const [loggedinStatus, setLoggedinStatus] = useState(false);
 
@@ -52,7 +51,7 @@ function SignInBasic() {
   }
   if(loggedinStatus === true){
     console.log(loggedinStatus);
-    navigate('/dashboard')
+    alert("success")
   }
 
   return (
