@@ -1,147 +1,21 @@
-/*
-=========================================================
-* Material Kit 2 React - v2.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-kit-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// @mui material components
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
-
-// Material Kit 2 React components
 import MKBox from "components/MKBox";
 import MKButton from "components/MKButton";
 import MKTypography from "components/MKTypography";
-
-// Images
 import bgImage from "assets/images/bg-coworking.jpeg";
-import { NavLink } from "react-router-dom";
+import { Link as RLink } from "react-router-dom";
+import SimpleFooter from "examples/Footers/SimpleFooter";
+import LandingNavbar from "layouts/sections/navigation/navbars/components/LandingNavbar";
 
 function LandingPage() {
   return (
     <MKBox component="header" position="relative" height="100%">
       <MKBox component="nav" position="absolute" top="0.5rem" width="100%">
         <Container>
-          <Grid container flexDirection="row" alignItems="center">
-            <MKTypography
-              component={Link}
-              href="#"
-              variant="button"
-              color="white"
-              fontWeight="regular"
-              py={0.8125}
-              mr={2}
-            >
-              <h1>COPOLA</h1>
-            </MKTypography>
-            <MKButton
-              variant="outlined"
-              color="white"
-              sx={{ display: { xs: "block", lg: "none" }, ml: "auto" }}
-            >
-              <MKBox component="i" color="white" className="fas fa-bars" />
-            </MKButton>
-            <MKBox
-              component="ul"
-              display={{ xs: "none", lg: "flex" }}
-              p={0}
-              my={0}
-              mx="auto"
-              sx={{ listStyle: "none" }}
-            >
-              <MKBox component="li">
-                <MKTypography
-                  component={Link}
-                  href="#"
-                  variant="button"
-                  color="white"
-                  fontWeight="regular"
-                  p={1}
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Home
-                </MKTypography>
-              </MKBox>
-              <MKBox component="li">
-                <MKTypography
-                  component={Link}
-                  href="#"
-                  variant="button"
-                  color="white"
-                  fontWeight="regular"
-                  p={1}
-                  onClick={(e) => e.preventDefault()}
-                >
-                  About Us
-                </MKTypography>
-              </MKBox>
-              <MKBox component="li">
-                <MKTypography
-                  component={Link}
-                  href="#"
-                  variant="button"
-                  color="white"
-                  fontWeight="regular"
-                  p={1}
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Contact Us
-                </MKTypography>
-              </MKBox>
-            </MKBox>
-            <MKBox
-              component="ul"
-              display={{ xs: "none", lg: "flex" }}
-              p={0}
-              m={0}
-              sx={{ listStyle: "none" }}
-            >
-              <MKBox component="li">
-                <MKTypography
-                  component={Link}
-                  href="#"
-                  variant="button"
-                  p={1}
-                  onClick={(e) => e.preventDefault()}
-                >
-                  <MKBox component="i" color="white" className="fab fa-twitter" />
-                </MKTypography>
-              </MKBox>
-              <MKBox component="li">
-                <MKTypography
-                  component={Link}
-                  href="#"
-                  variant="button"
-                  p={1}
-                  onClick={(e) => e.preventDefault()}
-                >
-                  <MKBox component="i" color="white" className="fab fa-facebook" />
-                </MKTypography>
-              </MKBox>
-              <MKBox component="li">
-                <MKTypography
-                  component={Link}
-                  href="#"
-                  variant="button"
-                  p={1}
-                  onClick={(e) => e.preventDefault()}
-                >
-                  <MKBox component="i" color="white" className="fab fa-instagram" />
-                </MKTypography>
-              </MKBox>
-            </MKBox>
-          </Grid>
+            <LandingNavbar />
         </Container>
       </MKBox>
       <MKBox
@@ -149,7 +23,10 @@ function LandingPage() {
         alignItems="center"
         minHeight="100vh"
         sx={{
-          backgroundImage: ({ palette: { gradients }, functions: { linearGradient, rgba } }) =>
+          backgroundImage: ({
+            palette: { gradients },
+            functions: { linearGradient, rgba },
+          }) =>
             `${linearGradient(
               rgba(gradients.dark.main, 0.5),
               rgba(gradients.dark.state, 0.5)
@@ -159,9 +36,20 @@ function LandingPage() {
         }}
       >
         <Container>
-          <Grid container item xs={12} md={7} lg={6} flexDirection="column" justifyContent="center">
+          <Grid
+            container
+            item
+            xs={12}
+            md={9}
+            lg={9}
+            position="relative"
+            left="20%"
+            top="10px"
+            flexDirection="column"
+            justifyContent="center"
+          >
             <MKTypography
-              variant="h1"
+              variant="h2"
               color="white"
               mb={3}
               sx={({ breakpoints, typography: { size } }) => ({
@@ -170,20 +58,76 @@ function LandingPage() {
                 },
               })}
             >
-              Material Kit
+              Introduction
             </MKTypography>
-            <MKTypography variant="body1" color="white" opacity={0.8} pr={6} mr={6}>
-              The time is now for it be okay to be great. People in this world shun people for being
-              nice.
+            <MKTypography
+              variant="body1"
+              color="white"
+              opacity={0.8}
+              pr={6}
+              mr={6}
+            >
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book.
             </MKTypography>
-            <Stack direction="row" spacing={1} mt={3}>
-              <MKButton color="white"><NavLink to="/sign-in">Get Started</NavLink></MKButton>
-              <MKButton variant="text" color="white">
-                Read more
-              </MKButton>
-            </Stack>
           </Grid>
         </Container>
+        <Container>
+          <Grid
+            container
+            item
+            xs={12}
+            md={7}
+            lg={7}
+            position="relative"
+            left="6%"
+            flexDirection="column"
+            justifyContent="center"
+          >
+            <MKTypography
+              variant="h4"
+              color="white"
+              mb={3}
+              sx={({ breakpoints, typography: { size } }) => ({
+                [breakpoints.down("md")]: {
+                  fontSize: size["3xl"],
+                },
+              })}
+            >
+              Welcome
+            </MKTypography>
+            <MKTypography
+              variant="body1"
+              color="white"
+              opacity={0.8}
+              pr={0}
+              mr={0}
+            >
+              The time is now for it be okay to be great. People in this world
+              shun people for being nice.
+            </MKTypography>
+            <Grid 
+              item
+              lg={12}
+              position="relative"
+              right="2%"
+            >
+              <Stack direction="row" spacing={2} mt={3}>
+                <RLink to="/sign-up">
+                  <MKButton color="white">Join the community</MKButton>
+                </RLink>
+                <RLink to="/sign-in">
+                  <MKButton color="white">Already a member</MKButton>
+                </RLink>
+              </Stack>
+            </Grid>
+          </Grid>
+        </Container>
+      </MKBox>
+      <MKBox width="100%" position="absolute" zIndex={2} bottom="1.625rem">
+        <SimpleFooter light />
       </MKBox>
     </MKBox>
   );

@@ -26,6 +26,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import theme from "assets/theme";
 import Presentation from "layouts/pages/presentation";
 import LandingPage from "pages/LandingPages";
+import Navbar from "examples/Navbars/DefaultNavbar"
 
 // Material Kit 2 React routes
 import routes from "routes";

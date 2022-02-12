@@ -15,7 +15,7 @@ import DefaultNavbarDropdown from "examples/Navbars/DefaultNavbar/DefaultNavbarD
 import DefaultNavbarMobile from "examples/Navbars/DefaultNavbar/DefaultNavbarMobile";
 import breakpoints from "assets/theme/base/breakpoints";
 
-function DefaultNavbar({ brand, routes, transparent, light, action, sticky, relative, center }) {
+function LandingDefaultNavbar({ brand, routes, transparent, light, action, sticky, relative, center }) {
   const [dropdown, setDropdown] = useState("");
   const [dropdownEl, setDropdownEl] = useState("");
   const [dropdownName, setDropdownName] = useState("");
@@ -563,4 +563,4 @@ DefaultNavbar.propTypes = {
   center: PropTypes.bool,
 };
 
-export default DefaultNavbar;
+export default LandingDefaultNavbar;
