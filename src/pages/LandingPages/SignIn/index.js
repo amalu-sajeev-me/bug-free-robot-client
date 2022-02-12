@@ -1,12 +1,8 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, Navigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import Switch from "@mui/material/Switch";
 import Grid from "@mui/material/Grid";
-import MuiLink from "@mui/material/Link";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import GoogleIcon from "@mui/icons-material/Google";
 import MKBox from "components/MKBox";
 import MKTypography from "components/MKTypography";
 import MKInput from "components/MKInput";
@@ -14,11 +10,48 @@ import MKButton from "components/MKButton";
 import SimpleFooter from "examples/Footers/SimpleFooter";
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 import { Stack } from "@mui/material";
+import axios from "axios";
 
 function SignInBasic() {
+
   const [rememberMe, setRememberMe] = useState(false);
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
+
+  const [loggedinStatus, setLoggedinStatus] = useState(false);
+  useEffect(() => {
+    console.log('status:',loggedinStatus);
+  })
+
+  function handleBtnClick(e) {
+    e.preventDefault();
+  (function () {
+    const form = document.forms[0];
+    const username = form.elements.namedItem('username').value;
+    const password = form.elements.namedItem('password').value;
+    console.log(username, password);
+    const loginRequest = new URL("https://bug-free.herokuapp.com/api/members/login");
+    axios.post(loginRequest,{
+      username: `${username}`,
+      password: `${password}`
+    },{
+      withCredentials: true
+    })
+    .then(res => {
+        console.log("loggedin status", loggedinStatus);
+        console.log("response result:", res.data);
+        if (res.data.status === true) {
+          console.log("logging in .. . ");
+          setLoggedinStatus(true)
+          console.log('status:',loggedinStatus);
+        }
+    });
+  })();
+}
+if(loggedinStatus === true){
+  console.log('loginstatus:',loggedinStatus);
+  <Navigate to="/" />
+}
 
   return (
     <>
@@ -62,10 +95,10 @@ function SignInBasic() {
               <MKBox pt={4} pb={3} px={3}>
                 <MKBox component="form" role="form">
                   <MKBox mb={2}>
-                    <MKInput type="text" label="Username" fullWidth />
+                    <MKInput type="text" label="Username" name="username" fullWidth defaultValue=""/>
                   </MKBox>
                   <MKBox mb={2}>
-                    <MKInput type="password" label="Password" fullWidth />
+                    <MKInput type="password" label="Password" name="password" fullWidth defaultValue=""/>
                   </MKBox>
                   <MKBox display="flex" alignItems="center" ml={-1}>
                     <Switch checked={rememberMe} onChange={handleSetRememberMe} />
@@ -81,7 +114,7 @@ function SignInBasic() {
                   </MKBox>
                   <MKBox mt={4} mb={1}>
                   <Stack direction="column" spacing={1} mt={2} color="white">
-                    <MKButton variant="gradient" color="info" fullWidth>sign in</MKButton>
+                    <MKButton variant="gradient" color="info" fullWidth onClick={handleBtnClick}>sign in</MKButton>
                     <Link to="/"><MKButton variant="gradient" color="info" fullWidth>cancel</MKButton></Link>
                   </Stack>
                   </MKBox>
