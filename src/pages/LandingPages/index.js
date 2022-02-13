@@ -7,14 +7,14 @@ import MKTypography from "components/MKTypography";
 import bgImage from "assets/images/bg-coworking.jpeg";
 import { Link as RLink } from "react-router-dom";
 import SimpleFooter from "examples/Footers/SimpleFooter";
-import LandingNavbar from "layouts/sections/navigation/navbars/components/LandingNavbar";
+import LandingPageNavbar from "examples/Navbars/LandingPageNavbar"
 
 function LandingPage() {
   return (
     <MKBox component="header" position="relative" height="100%">
       <MKBox component="nav" position="absolute" top="0.5rem" width="100%">
         <Container>
-            <LandingNavbar />
+          <LandingPageNavbar />
         </Container>
       </MKBox>
       <MKBox

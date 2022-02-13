@@ -107,10 +107,7 @@ function SimpleFooter({ company, links, light }) {
 SimpleFooter.defaultProps = {
   company: { href: "", name: "COPOLA" },
   links: [
-    { href: "", name: "COPOLA" },
-    { href: "https://www.creative-tim.com/presentation", name: "About Us" },
-    { href: "https://www.creative-tim.com/blog", name: "Blog" },
-    { href: "https://www.creative-tim.com/license", name: "License" },
+    { href: "", name: "COPOLA" }
   ],
   light: false,
 };

@@ -52,7 +52,7 @@ function SignInBasic(){
     const username = form.elements.namedItem('username').value;
     const password = form.elements.namedItem('password').value;
     console.log(username, password);
-    const loginRequest = new URL("https://bug-free.herokuapp.com/api/members/login");
+    const loginRequest = new URL("https://copola.herokuapp.com/api/members/login");
     axios.post(loginRequest,{
       username: `${username}`,
       password: `${password}`

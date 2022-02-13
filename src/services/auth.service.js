@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URL = "https://bug-free.herokuapp.com/api/members/login";
+const API_URL = "https://copola.herokuapp.com/api/members/login";
 class AuthService {
   login(username, password) {
     return axios

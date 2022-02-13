@@ -1,6 +1,6 @@
 import axios from 'axios';
 import authHeader from './auth-header';
-const API_URL = 'https://bug-free.herokuapp.com/api/members/login';
+const API_URL = 'https://copola.herokuapp.com/api/members/login';
 class UserService {
   getPublicContent() {
     return axios.get(API_URL + 'all');
