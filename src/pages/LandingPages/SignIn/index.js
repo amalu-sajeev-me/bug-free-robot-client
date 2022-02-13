@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import React, { useState,useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import Switch from "@mui/material/Switch";
@@ -11,8 +11,6 @@ import SimpleFooter from "examples/Footers/SimpleFooter";
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 import { Stack } from "@mui/material";
 import axios from "axios";
-import { isEmail } from "validator";
-import AuthService from "services/auth.service";
 
 function SignInBasic(){
   const navigate = useNavigate();
