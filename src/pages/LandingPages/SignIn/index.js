@@ -11,9 +11,33 @@ import SimpleFooter from "examples/Footers/SimpleFooter";
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 import { Stack } from "@mui/material";
 import axios from "axios";
+import { isEmail } from "validator";
+import AuthService from "services/auth.service";
 
 function SignInBasic(){
+  const navigate = useNavigate();
+  const [usernme, setUsername] = useState();
+  const [ password, setPassword ] = useState();
+  const [ msg, setMsg ] = useState();
+  const [ successful, setSuccessful ] = useState(false);
 
+  const onChangeUsername = (e) => {
+    setUsername({
+      username: e.target.value
+    });
+  }
+  const onChangePassword = (e) => {
+    setPassword({
+      password: e.target.value
+    });
+  }
+
+  const handleRegister = (e) => {
+    setMsg({
+      msg: "",
+      successful: false
+    });
+  }
   const [loggedinStatus, setLoggedinStatus] = useState(false);
   useEffect(() => {
     console.log('status:',loggedinStatus);
@@ -51,6 +75,7 @@ function SignInBasic(){
 if(loggedinStatus === true){
   console.log('loginstatus:',loggedinStatus);
   alert("success")
+  navigate('/dashboard')
 }
 
   return (
