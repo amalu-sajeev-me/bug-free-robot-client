@@ -1,61 +1,167 @@
-
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import MKBox from "components/MKBox";
 import MKTypography from "components/MKTypography";
-import MKInput from "components/MKInput";
 import MKButton from "components/MKButton";
 import SimpleFooter from "examples/Footers/SimpleFooter";
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 import { Stack } from "@mui/material";
-import axios from "axios";
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
+import { isEmail } from "validator";
+import CheckButton from "react-validation/build/button";
+import AuthService from "services/auth.service";
+import "./style.css"
 
-function SignInBasic() {
+const required = (value) => {
+  if (!value) {
+    return (
+      <div id="alert">
+        This field is required!
+      </div>
+    );
+  }
+};
+const fname = (value) => {
+  if (value.length < 3) {
+    return (
+      <div id="alert">
+        The firstname must be atleast 3
+      </div>
+    );
+  }
+};
+const lname = (value) => {
+  if (value.length < 3) {
+    return (
+      <div id="alert">
+        The lastname must be atleast 3
+      </div>
+    );
+  }
+};
+const validEmail = (value) => {
+  if (!isEmail(value)) {
+    return (
+      <div id="alert">
+        This is not a valid email.
+      </div>
+    );
+  }
+};
+const dob = (value) => {
+  if (value.length < 3) {
+    return (
+      <div id="alert">
+        Enter a valid date
+      </div>
+    );
+  }
+};
+const ph = (value) => {
+  if (value.length < 10) {
+    return (
+      <div id="alert">
+        Number must be valid
+      </div>
+    );
+  }
+};
+const vusername = (value) => {
+  if (value.length < 3 || value.length > 20) {
+    return (
+      <div id="alert">
+        The username must be between 3 and 20 characters.
+      </div>
+    );
+  }
+};
+const vpassword = (value) => {
+  if (value.length < 6 || value.length > 40) {
+    return (
+      <div id="alert">
+        The password must be between 6 and 40 characters.
+      </div>
+    );
+  }
+};
+
+const SignInBasic = (props) => {
   const navigate = useNavigate();
 
-  const [loggedinStatus, setLoggedinStatus] = useState(false);
-
-  function handleBtnClick(e) {
+  const form = useRef();
+  const checkBtn = useRef();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [phone, setPhone] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  // const [confirmpassword, setConfirmpassword] = useState("");
+  const [successful, setSuccessful] = useState(false);
+  const [message, setMessage] = useState("");
+  const onChangeFirstName = (e) => {
+    const firstName = e.target.value;
+    setFirstName(firstName);
+  };
+  const onChangeLastName = (e) => {
+    const lastName = e.target.value;
+    setLastName(lastName);
+  };
+  const onChangeEmail = (e) => {
+    const email = e.target.value;
+    setEmail(email);
+  };
+  const onChangeUsername = (e) => {
+    const username = e.target.value;
+    setUsername(username);
+  };
+  const onChangeDob = (e) => {
+    const dateOfBirth = e.target.value;
+    setDateOfBirth(dateOfBirth);
+  };
+  const onChangePhone = (e) => {
+    const phone = e.target.value;
+    setPhone(phone);
+  };
+  const onChangePassword = (e) => {
+    const password = e.target.value;
+    setPassword(password);
+  };
+  // const onChangeConfirmPassword = (e) => {
+  //   const confirmpassword = e.target.value;
+  //   setPassword(confirmpassword);
+  // };
+  const handleRegister = (e) => {
     e.preventDefault();
-
-    (async function () {
-      const form = document.forms[0];
-      const firstName = form.elements.namedItem('firstName').value;
-      const lastName = form.elements.namedItem('lastName').value;
-      const dateOfBirth = form.elements.namedItem('dateOfBirth').value;
-      const phone = form.elements.namedItem('phone').value;
-      const email = form.elements.namedItem('email').value;
-      const username = form.elements.namedItem('username').value;
-      const password = form.elements.namedItem('password').value;
-      console.log(firstName, lastName, dateOfBirth, phone, email, username, password);
-      const loginRequest = new URL("https://copola.herokuapp.com/api/members/checkin");
-      axios.post(loginRequest, {
-          firstName: `${firstName}`,
-          lastName: `${lastName}`,
-          dateOfBirth:`${dateOfBirth}`,
-          phone:`${phone}`,
-          email:`${email}`,
-          username:`${username}`,
-          password:`${password}`
-      },{
-        withCredentials: true
-      }).then(res => {
-          console.log("loggedin status", loggedinStatus);
-          console.log("response result:", res.data.status);
-          if (res.data.status === true) {
-            console.log("logging in .. . ");
-            setLoggedinStatus(true)
-          };
-      })
-    })();
-  }
-  if(loggedinStatus === true){
-    console.log(loggedinStatus);
-    alert("success")
-    navigate('/dashboard');
-  }
+    setMessage("");
+    setSuccessful(false);
+    form.current.validateAll();
+    if (checkBtn.current.context._errors.length === 0) {
+      AuthService.register(firstName, lastName, email, dateOfBirth, phone, username, password).then(
+        (response) => {
+          navigate('/dashboard')
+          window.location.reload();
+          setMessage(response.data.message)
+          setSuccessful(true)
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+          setMessage(resMessage);
+          setSuccessful(false)
+        }
+      );
+    }
+    console.log(successful);
+  };
 
   return (
     <>
@@ -67,7 +173,10 @@ function SignInBasic() {
         width="100%"
         minHeight="100vh"
         sx={{
-          backgroundImage: ({ functions: { linearGradient, rgba }, palette: { gradients } }) =>
+          backgroundImage: ({
+            functions: { linearGradient, rgba },
+            palette: { gradients },
+          }) =>
             `${linearGradient(
               rgba(gradients.dark.main, 0.6),
               rgba(gradients.dark.state, 0.6)
@@ -77,60 +186,151 @@ function SignInBasic() {
           backgroundRepeat: "no-repeat",
         }}
       />
-      <MKBox px={1} width="100%" height="93vh" mx="auto" position="relative" zIndex={2}>
-        <Grid container spacing={1} justifyContent="center" alignItems="center" height="100%">
-          <Grid item xs={11} sm={9} md={5} lg={4} xl={3}>
+      <MKBox
+        px={1}
+        width="100%"
+        height="100vh"
+        mx="auto"
+        position="relative"
+        zIndex={2}
+      >
+        <Grid
+          container
+          spacing={1}
+          justifyContent="center"
+          alignItems="center"
+          height="100%"
+        >
+          <Grid item xs={11} sm={9} md={5} lg={3} xl={3}>
             <Card>
               <MKBox
                 variant="gradient"
-                bgColor="info"
+                bgColor="secondary"
                 borderRadius="lg"
                 coloredShadow="info"
-                mx={5}
+                mx={1}
                 mt={-3}
-                p={1}
-                mb={.0}
+                p={2}
+                mb={1}
                 textAlign="center"
               >
-                <MKTypography variant="h4" fontWeight="medium" color="white" m1={3}>
-                  Sign Up
+                <MKTypography
+                  variant="h4"
+                  fontWeight="medium"
+                  color="white"
+                  mt={1}
+                >
+                  Sign in
                 </MKTypography>
               </MKBox>
-              <MKBox pt={2} pb={3} px={7}>
-                <MKBox component="form" role="form">
-                  <MKBox mb={1}>
-                    <MKInput type="text" label="FirstName" name="firstName" defaultValue="" fullWidth />
+              <MKBox pt={2} pb={1.5} px={1.5}>
+                {!successful && (
+                <Form onSubmit={handleRegister} ref={form}>
+                <MKBox mb={1}>
+                    <Input
+                      placeholder="FirstName"
+                      type="text"
+                      className="form-control"
+                      name="firstName"
+                      value={firstName}
+                      onChange={onChangeFirstName}
+                      validations={[required, fname]}
+                    />
                   </MKBox>
                   <MKBox mb={1}>
-                    <MKInput type="text" label="LastName" name="lastName" defaultValue="" fullWidth />
+                    <Input
+                      placeholder="LastName"
+                      type="text"
+                      className="form-control"
+                      name="lastName"
+                      value={lastName}
+                      onChange={onChangeLastName}
+                      validations={[required, lname]}
+                    />
                   </MKBox>
                   <MKBox mb={1}>
-                    <MKInput type="email" label="Email" name="email" defaultValue="" fullWidth />
+                    <Input
+                      placeholder="Email"
+                      type="text"
+                      className="form-control"
+                      name="email"
+                      value={email}
+                      onChange={onChangeEmail}
+                      validations={[required,validEmail]}
+                    />
                   </MKBox>
                   <MKBox mb={1}>
-                    <MKInput type="text" label="Username" name="username" defaultValue="" fullWidth />
+                    <Input
+                      type="date"
+                      className="form-control"
+                      name="dateOfBirth"
+                      value={dateOfBirth}
+                      onChange={onChangeDob}
+                      validations={[required,dob]}
+                    />
                   </MKBox>
                   <MKBox mb={1}>
-                    <MKInput type="date" label="" name="dateOfBirth" defaultValue="" fullWidth />
+                    <Input
+                      placeholder= "Phone"
+                      type="text"
+                      className="form-control"
+                      name="phone"
+                      value={phone}
+                      onChange={onChangePhone}
+                      validations={[required,ph]}
+                    />
                   </MKBox>
                   <MKBox mb={1}>
-                    <MKInput type="number" label="Phone" name="phone" defaultValue="" fullWidth />
+                    <Input
+                      placeholder="Username"
+                      type="text"
+                      className="form-control"
+                      name="username"
+                      value={username}
+                      onChange={onChangeUsername}
+                      validations={[required,vusername]}
+                    />
                   </MKBox>
                   <MKBox mb={1}>
-                    <MKInput type="password" label="Password" name="password" defaultValue="" fullWidth />
+                    <Input
+                      placeholder="Password"
+                      type="password"
+                      className="form-control"
+                      name="password"
+                      value={password}
+                      onChange={onChangePassword}
+                      validations={[vpassword]}
+                    />
                   </MKBox>
-                  <MKBox mb={1}>
-                    <MKInput type="password" label="Confirm Password" name="confirmpassword" defaultValue="" fullWidth />
-                  </MKBox>
-                  <MKBox mt={1} mb={.2} >
+                  {/* <MKBox mb={1}>
+                    <Input
+                      placeholder="Confirm Password"
+                      type="password"
+                      className="form-control"
+                      name="Confirmpassword"
+                      value=""
+                      onChange={onChangeConfirmPassword}
+                      validations={[vpassword]}
+                    />
+                  </MKBox> */}
                   <Stack direction="column" spacing={1} mt={2} color="white">
-                    <MKButton variant="gradient" color="info" onClick={handleBtnClick} fullWidth>sign in</MKButton>
-                    <Link to="/"><MKButton variant="gradient" color="info" fullWidth>cancel</MKButton></Link>
+                  <button className="loginbtn">
+                  <MKButton variant="gradient" color="secondary" fullWidth>
+                      Sign Up
+                    </MKButton>
+                    </button>
+                    <Link to="/"><MKButton variant="gradient" color="secondary" fullWidth>cancel</MKButton></Link>
                   </Stack>
+                  <MKBox textAlign="center">
+                  {message && (
+                      <div id="alert">
+                        {message}
+                      </div>
+                  )}
                   </MKBox>
-                  <MKBox mt={1} mb={.2} textAlign="center">
+                  <MKBox textAlign="center">
                     <MKTypography variant="button" color="text">
-                      Already have an account?{" "}
+                      Don&apos;t have an account?{" "}
                       <MKTypography
                         component={Link}
                         to="/sign-in"
@@ -143,7 +343,9 @@ function SignInBasic() {
                       </MKTypography>
                     </MKTypography>
                   </MKBox>
-                </MKBox>
+                  <CheckButton style={{ display: "none" }} ref={checkBtn} />
+                </Form>
+                )}
               </MKBox>
             </Card>
           </Grid>
@@ -154,6 +356,6 @@ function SignInBasic() {
       </MKBox>
     </>
   );
-}
+};
 
 export default SignInBasic;

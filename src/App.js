@@ -8,6 +8,8 @@ import Presentation from "layouts/pages/presentation";
 import LandingPage from "pages/LandingPages";
 import routes from "routes";
 import SignInPage from "layouts/pages/authentication/sign-in";
+import Dashboard from "pages/Dashboard";
+import UProfile from "pages/Profile";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -38,7 +40,9 @@ export default function App() {
         {getRoutes(routes)}
         <Route path="/" element={<LandingPage />} />
         <Route path="/sign-in" element={<SignInPage />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/presentation" element={<Presentation />} />
+        <Route path="/profile" element={<UProfile />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </ThemeProvider>

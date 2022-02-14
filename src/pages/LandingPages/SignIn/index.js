@@ -1,80 +1,71 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
-import Switch from "@mui/material/Switch";
 import Grid from "@mui/material/Grid";
 import MKBox from "components/MKBox";
 import MKTypography from "components/MKTypography";
-import MKInput from "components/MKInput";
 import MKButton from "components/MKButton";
 import SimpleFooter from "examples/Footers/SimpleFooter";
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 import { Stack } from "@mui/material";
-import axios from "axios";
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
+import CheckButton from "react-validation/build/button";
+import AuthService from "services/auth.service";
+import "./style.css"
+const required = (value) => {
+  if (!value) {
+    return (
+      <div id="alert">
+        This field is required!
+      </div>
+    );
+  }
+};
 
-function SignInBasic(){
+const SignInBasic = (props) => {
   const navigate = useNavigate();
-  const [usernme, setUsername] = useState();
-  const [ password, setPassword ] = useState();
-  const [ msg, setMsg ] = useState();
-  const [ successful, setSuccessful ] = useState(false);
 
+  const form = useRef();
+  const checkBtn = useRef();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
   const onChangeUsername = (e) => {
-    setUsername({
-      username: e.target.value
-    });
-  }
+    const username = e.target.value;
+    setUsername(username);
+  };
   const onChangePassword = (e) => {
-    setPassword({
-      password: e.target.value
-    });
-  }
-
-  const handleRegister = (e) => {
-    setMsg({
-      msg: "",
-      successful: false
-    });
-  }
-  const [loggedinStatus, setLoggedinStatus] = useState(false);
-  useEffect(() => {
-    console.log('status:',loggedinStatus);
-  })
-
-  const [rememberMe, setRememberMe] = useState(false);
-
-  const handleSetRememberMe = () => setRememberMe(!rememberMe);
-
-  function handleBtnClick(e) {
+    const password = e.target.value;
+    setPassword(password);
+  };
+  const handleLogin = (e) => {
     e.preventDefault();
-  (function () {
-    const form = document.forms[0];
-    const username = form.elements.namedItem('username').value;
-    const password = form.elements.namedItem('password').value;
-    console.log(username, password);
-    const loginRequest = new URL("https://copola.herokuapp.com/api/members/login");
-    axios.post(loginRequest,{
-      username: `${username}`,
-      password: `${password}`
-    },{
-      withCredentials: true
-    })
-    .then(res => {
-        console.log("loggedin status", loggedinStatus);
-        console.log("response result:", res.data);
-        if (res.data.status === true) {
-          console.log("logging in .. . ");
-          setLoggedinStatus(true)
-          console.log('status:',loggedinStatus);
+    setMessage("");
+    setLoading(true);
+    form.current.validateAll();
+    if (checkBtn.current.context._errors.length === 0) {
+      AuthService.login(username, password).then(
+        () => {
+          navigate("/dashboard");
+          window.location.reload();
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+          setLoading(false);
+          setMessage(resMessage);
         }
-    });
-  })();
-}
-if(loggedinStatus === true){
-  console.log('loginstatus:',loggedinStatus);
-  alert("success")
-  navigate('/dashboard')
-}
+      );
+    } else {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
@@ -86,7 +77,10 @@ if(loggedinStatus === true){
         width="100%"
         minHeight="100vh"
         sx={{
-          backgroundImage: ({ functions: { linearGradient, rgba }, palette: { gradients } }) =>
+          backgroundImage: ({
+            functions: { linearGradient, rgba },
+            palette: { gradients },
+          }) =>
             `${linearGradient(
               rgba(gradients.dark.main, 0.6),
               rgba(gradients.dark.state, 0.6)
@@ -96,13 +90,26 @@ if(loggedinStatus === true){
           backgroundRepeat: "no-repeat",
         }}
       />
-      <MKBox px={1} width="100%" height="100vh" mx="auto" position="relative" zIndex={2}>
-        <Grid container spacing={1} justifyContent="center" alignItems="center" height="100%">
+      <MKBox
+        px={1}
+        width="100%"
+        height="100vh"
+        mx="auto"
+        position="relative"
+        zIndex={2}
+      >
+        <Grid
+          container
+          spacing={1}
+          justifyContent="center"
+          alignItems="center"
+          height="100%"
+        >
           <Grid item xs={11} sm={9} md={5} lg={4} xl={3}>
             <Card>
               <MKBox
                 variant="gradient"
-                bgColor="info"
+                bgColor="secondary"
                 borderRadius="lg"
                 coloredShadow="info"
                 mx={2}
@@ -111,37 +118,58 @@ if(loggedinStatus === true){
                 mb={1}
                 textAlign="center"
               >
-                <MKTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+                <MKTypography
+                  variant="h4"
+                  fontWeight="medium"
+                  color="white"
+                  mt={1}
+                >
                   Sign in
                 </MKTypography>
               </MKBox>
               <MKBox pt={4} pb={3} px={3}>
-                <MKBox component="form" role="form">
+                <Form onSubmit={handleLogin} ref={form}>
                   <MKBox mb={2}>
-                    <MKInput type="text" label="Username" name="username" fullWidth defaultValue=""/>
+                    <Input
+                      placeholder="Username"
+                      type="text"
+                      className="form-control"
+                      name="username"
+                      value={username}
+                      onChange={onChangeUsername}
+                      validations={[required]}
+                    />
                   </MKBox>
                   <MKBox mb={2}>
-                    <MKInput type="password" label="Password" name="password" fullWidth defaultValue=""/>
+                    <Input
+                      placeholder="Password"
+                      type="password"
+                      className="form-control"
+                      name="password"
+                      value={password}
+                      onChange={onChangePassword}
+                      validations={[required]}
+                    />
                   </MKBox>
-                  <MKBox display="flex" alignItems="center" ml={-1}>
-                    <Switch checked={rememberMe} onChange={handleSetRememberMe} />
-                    <MKTypography
-                      variant="button"
-                      fontWeight="regular"
-                      color="text"
-                      onClick={handleSetRememberMe}
-                      sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
-                    >
-                      &nbsp;&nbsp;Remember me
-                    </MKTypography>
-                  </MKBox>
-                  <MKBox mt={4} mb={1}>
                   <Stack direction="column" spacing={1} mt={2} color="white">
-                    <MKButton variant="gradient" color="info" fullWidth onClick={handleBtnClick}>sign in</MKButton>
-                    <Link to="/"><MKButton variant="gradient" color="info" fullWidth>cancel</MKButton></Link>
+                  <button className="loginbtn">
+                  <MKButton variant="gradient" color="secondary" fullWidth>
+                      {loading && (
+                        <span className="spinner-border spinner-border-sm"></span>
+                      )}
+                      Login
+                    </MKButton>
+                    </button>
+                    <Link to="/"><MKButton variant="gradient" color="secondary" fullWidth>cancel</MKButton></Link>
                   </Stack>
+                  <MKBox textAlign="center">
+                  {message && (
+                      <div id="alert">
+                        {message}
+                      </div>
+                  )}
                   </MKBox>
-                  <MKBox mt={3} mb={1} textAlign="center">
+                  <MKBox textAlign="center">
                     <MKTypography variant="button" color="text">
                       Don&apos;t have an account?{" "}
                       <MKTypography
@@ -156,7 +184,8 @@ if(loggedinStatus === true){
                       </MKTypography>
                     </MKTypography>
                   </MKBox>
-                </MKBox>
+                  <CheckButton style={{ display: "none" }} ref={checkBtn} />
+                </Form>
               </MKBox>
             </Card>
           </Grid>
@@ -167,6 +196,6 @@ if(loggedinStatus === true){
       </MKBox>
     </>
   );
-}
+};
 
 export default SignInBasic;
