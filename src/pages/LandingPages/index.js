@@ -50,6 +50,7 @@ function LandingPage() {
             <MKTypography
               variant="h2"
               color="white"
+              fontSize="bold"
               mb={3}
               sx={({ breakpoints, typography: { size } }) => ({
                 [breakpoints.down("md")]: {

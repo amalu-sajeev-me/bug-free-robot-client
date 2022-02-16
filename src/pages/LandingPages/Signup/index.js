@@ -143,9 +143,9 @@ const SignInBasic = (props) => {
     if (checkBtn.current.context._errors.length === 0) {
       AuthService.register(firstName, lastName, email, dateOfBirth, phone, username, password).then(
         (response) => {
-          navigate('/dashboard')
+          navigate('/dashboard');
           window.location.reload();
-          setMessage(response.data.message)
+          setMessage(response.data.message);
           setSuccessful(true)
         },
         (error) => {
